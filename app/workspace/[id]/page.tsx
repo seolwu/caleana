@@ -7,8 +7,6 @@ import Gallery from '@/components/Gallery'
 import AddLinkDialog from '@/components/AddLinkDialog'
 import EditLinkDialog from '@/components/EditLinkDialog'
 import Settings from '@/components/Settings'
-import Drawer from '@/components/Drawer'
-import TxtFileImport from '@/components/TxtFileImport'
 import Toast from '@/components/Toast'
 import Loading from '@/components/loading'
 import { sortLinks, filterLinks } from '@/utils/sort-filter-utils'
@@ -46,7 +44,7 @@ export default function WorkspacePage({ params }: { params: { id: string } }) {
   const [toastMessage, setToastMessage] = useState('')
   
   const searchInputRef = useRef<HTMLInputElement>(null)
-  const isKeyboardAvailable = false && useKeyboardDetection()
+  const isKeyboardAvailable = false // useKeyboardDetection()
 
   useEffect(() => {
     const loadData = async () => {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Dialog from './Dialog'
 import { getThumbnailFromUrl } from '@/utils/image-extraction-utils'
 
@@ -80,13 +81,13 @@ const AddLinkDialog: React.FC<AddLinkDialogProps> = ({ isOpen, onClose, onAdd, w
         {thumbnailUrl && (
           <div className='stack w-full mb-4'>
             <div className='card bg-base-200 text-center shadow-md'>
-              <img src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-96 object-cover rounded' />
+              <Image src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-96 object-cover rounded' />
             </div>
             <div className='card bg-base-200 text-center shadow blur-sm'>
-              <img src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-96 object-cover rounded' />
+              <Image src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-96 object-cover rounded' />
             </div>
             <div className='card bg-base-200 text-center shadow-sm blur'>
-              <img src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-96 object-cover rounded' />
+              <Image src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-96 object-cover rounded' />
             </div>
           </div>
         )}

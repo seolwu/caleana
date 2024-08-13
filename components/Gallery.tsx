@@ -1,7 +1,8 @@
 import React, { useRef } from 'react'
 import { DndProvider, useDrag, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { LinkItem, SortType } from '@/types'
+import Image from 'next/image'
+import { LinkItem } from '@/types'
 
 const DraggableWrapper = React.forwardRef<
   HTMLDivElement,
@@ -47,7 +48,7 @@ const GalleryItem: React.FC<{
       <div className={`card bg-base-100 shadow-xl h-full transition-all duration-200 ease-in-out ${isDragging ? 'opacity-50' : 'hover:scale-105'} animate-scale-in`}>
         {item.thumbnailUrl && ( 
           <figure className='px-4 pt-4'>
-            <img src={item.thumbnailUrl} alt={item.title} className='rounded-xl object-cover w-full h-36' />
+            <Image src={item.thumbnailUrl} alt={item.title} className='rounded-xl object-cover w-full h-36' />
           </figure>
         )}
         <div className='card-body p-3'>

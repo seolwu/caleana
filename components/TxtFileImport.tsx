@@ -85,7 +85,7 @@ const TxtFileImport: React.FC<TxtFileImportProps> = ({ onImport, workspaceId, cu
         {isDragActive ? (
           <p>Drop the TXT file here ...</p>
         ) : (
-          <p>Drag 'n' drop a TXT file here, or click to select a file</p>
+          <p>Drag & drop a TXT file here, or click to select a file</p>
         )}
       </div>
       <textarea

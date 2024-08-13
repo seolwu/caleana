@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Dialog from './Dialog'
 import { getThumbnailFromUrl } from '@/utils/image-extraction-utils'
 import { LinkItem } from '@/types'
@@ -81,7 +82,7 @@ const EditLinkDialog: React.FC<EditLinkDialogProps> = ({ isOpen, onClose, onEdit
         {isGeneratingThumbnail && <p className='text-sm text-gray-500 mb-4'>Generating thumbnail...</p>}
         {thumbnailUrl && (
           <div className='mb-4'>
-            <img src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-48 object-cover rounded' />
+            <Image src={thumbnailUrl} alt='Thumbnail' className='w-full max-h-48 object-cover rounded' />
           </div>
         )}
         <div className='flex justify-end space-x-2'>

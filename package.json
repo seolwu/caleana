@@ -1,6 +1,6 @@
 {
   "name": "caleana",
-  "version": "0.1.d8r14",
+  "version": "0.1.d8r14.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
