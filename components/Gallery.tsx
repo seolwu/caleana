@@ -12,6 +12,8 @@ const DraggableWrapper = React.forwardRef<
   }
 >(({ children, className }, ref) => <div ref={ref} className={className}>{children}</div>)
 
+DraggableWrapper.displayName = 'DraggableWrapper'
+
 const GalleryItem: React.FC<{ 
   item: LinkItem 
   index: number 
@@ -19,7 +21,7 @@ const GalleryItem: React.FC<{
   onDelete: (id: string) => void
   onToggleFavorite: (id: string) => void
   onEdit: (id: string) => void
-}> = ({ item, index, moveItem, onDelete, onToggleFavorite, onEdit }) => {
+}> = ({ item, index, moveItem, onDelete, onEdit }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [{ isDragging }, drag] = useDrag({
     type: 'GALLERY_ITEM',
