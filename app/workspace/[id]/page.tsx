@@ -22,7 +22,6 @@ import {
   saveWorkspace,
   getOrCreateDefaultWorkspace,
 } from '@/lib/indexeddb'
-import useKeyboardDetection from '@/hooks/useKeyboardDetection'
 import { SortAttributeTypes, Items, filterAttributeTypes } from '@/types/constants'
 
 export default function WorkspacePage({ params }: { params: { id: string } }) {

@@ -74,8 +74,8 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({
               </button>
             </div>
           </div>
-          <div className='flex'>
-            <div className='w-1/4 pr-4'>
+          <div className='flex gap-4'>
+            <div className='w-1/4'>
               <ul className='menu bg-base-200 rounded-box gap-1'>
                 {tabs.map((tab) => (
                   <li key={tab.id}>

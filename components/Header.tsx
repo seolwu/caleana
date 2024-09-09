@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className='bg-base-100 shadow-lg p-4 select-none'>
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-center gap-2'>
         <div className='flex space-x-4 items-center'>
           <button className='btn btn-base-200' onClick={() => onDropdownSelect(Items.ADD_LINK, Items.ADD)}>
             {Items.ADD} {isKeyboardAvailable && <kbd className='kbd kbd-sm ml-1'>A</kbd>}
@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
             {Items.SETTINGS} {isKeyboardAvailable && <kbd className='kbd kbd-sm ml-1'>S</kbd>}
           </button>
         </div>
-        <h1 className='text-lg font-bold'>{currentWorkspace.name}</h1>
+        <h1 className='text-lg font-bold truncate'>{currentWorkspace.name}</h1>
         <div className='flex items-center space-x-4'>
           <div className='form-control'>
             <div className='input-group relative'>

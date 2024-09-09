@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Attribute, LinkItem, Workspace } from '@/types'
 import { saveWorkspace, deleteWorkspace } from '@/lib/indexeddb'
 
@@ -31,7 +31,7 @@ const WorkspaceManager: React.FC<WorkspaceManagerProps> = ({
     setNewPropertyState(false)
   }, [activeTab])
 
-  const handleAddWorkspace = async () => {
+  const handleAddWorkspace = useCallback(async () => {
     if (newWorkspaceName.trim()) {
       const newWorkspace: Workspace = {
         id: Date.now().toString(),
@@ -42,26 +42,26 @@ const WorkspaceManager: React.FC<WorkspaceManagerProps> = ({
       onWorkspacesChange(updatedWorkspaces)
       setNewWorkspaceName('')
     }
-  }
+  }, [workspaces, newWorkspaceName, saveWorkspace, onWorkspacesChange, setNewWorkspaceName])
 
-  const handleDeleteWorkspace = async (id: string) => {
+  const handleDeleteWorkspace = useCallback(async (id: string) => {
     await deleteWorkspace(id)
     const updatedWorkspaces = workspaces.filter(ws => ws.id !== id)
     onWorkspacesChange(updatedWorkspaces)
     if (currentWorkspace.id === id && updatedWorkspaces.length > 0) {
       onWorkspaceChange(updatedWorkspaces[0])
     }
-  }
+  }, [workspaces, currentWorkspace, deleteWorkspace, onWorkspaceChange, onWorkspacesChange])
 
-  const handleNewProperty = () => {
+  const handleNewProperty = useCallback(() => {
     setNewPropertyState(true)
-  }
+  }, [setNewPropertyState])
 
-  const handleCancelProperty = () => {
+  const handleCancelProperty = useCallback(() => {
     setNewPropertyState(false)
-  }
+  }, [setNewPropertyState])
 
-  const handleExport = () => {
+  const handleExport = useCallback(() => {
     const utf8ToBase64 = (data: string) => {
       return btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, (match, p1) => {
         return String.fromCharCode(parseInt(p1, 16))
@@ -99,11 +99,12 @@ const WorkspaceManager: React.FC<WorkspaceManagerProps> = ({
     }, (err) => {
       console.error('Could not copy text: ', err)
     })
-  }
+  }, [])
 
-  const handleImport = (importString: string) => {
+  const handleImport = useCallback((importString: string) => {
     try {
-      const importData = JSON.parse(atob(importString))
+      const str = atob(importString)
+      const importData = JSON.parse(str)
       if (importData.workspace && importData.links && importData.attributes) {
         onImport(importData.workspace, importData.links, importData.attributes)
         setImportError(null)
@@ -115,13 +116,37 @@ const WorkspaceManager: React.FC<WorkspaceManagerProps> = ({
       setImportError('Invalid import data. Please check the URL or string and try again.')
     }
     return importError === null
-  }
+  }, [onImport, importError, setImportError])
+
+  const sortKey = useCallback((item: { name: string }): [number, string, string, string, string] => {
+    if (item.name === 'Default') {
+      return [0, '', '', '', '']
+    }
+
+    const value = item.name
+    const alphas = value.replace(/[^a-zA-Z]/g, '')
+    const numbers = value.replace(/[^0-9]/g, '')
+    const specials = value.replace(/[a-zA-Z0-9\u0080-\uFFFF]/g, '')
+    const unicodeChars = value.replace(/[\u0000-\u007F]/g, '')
+
+    return [1, alphas.toLowerCase(), unicodeChars, numbers, specials]
+  }, [])
 
   return (
     <>
       <h3 className='text-lg font-semibold mb-4'>Workspaces</h3>
       <ul className='mb-4'>
-        {workspaces.map(workspace => (
+        {workspaces.sort((a, b) => {
+          const keyA = sortKey(a)
+          const keyB = sortKey(b)
+          
+          for (let i = 0; i < keyA.length; i++) {
+            if (keyA[i] < keyB[i]) return -1
+            if (keyA[i] > keyB[i]) return 1
+          }
+          
+          return 0
+        }).map(workspace => (
           <li key={workspace.id} className='flex justify-between items-center mb-2'>
             <span>{workspace.name}</span>
             <div>

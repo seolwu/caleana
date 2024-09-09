@@ -11,12 +11,16 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, title, children }) => 
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center animate-fade-in'>
+    <div className='fixed inset-0 z-50 overflow-auto flex items-center justify-center animate-fade-in'>
+      <div
+        className='absolute w-full h-full bg-black bg-opacity-50'
+        onClick={onClose}
+      ></div>
       <div className='relative bg-base-100 rounded-lg w-full max-w-2xl m-4 p-6 animate-scale-in shadow-xl'>
         <h2 className='text-2xl font-bold mb-4 text-base-content'>{title}</h2>
         <button
           onClick={onClose}
-          className='absolute top-2 right-2 btn btn-sm btn-circle btn-ghost'
+          className='absolute top-2 right-2 btn btn-sm btn-ghost'
           aria-label='Close dialog'
         >
           ✕
